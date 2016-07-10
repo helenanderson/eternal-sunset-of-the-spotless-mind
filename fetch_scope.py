@@ -19,7 +19,7 @@ twitter_auth = load_auth()
 twitter = tweepy.API(twitter_auth)
 
 def most_recent_live_scope():
-    tweets = twitter.search(q=QUERY, count=100)
+    tweets = twitter.search(q=QUERY, count=10)
     for tweet in tweets:
         print tweet.text
         for url in tweet.entities['urls']:
@@ -28,7 +28,12 @@ def most_recent_live_scope():
                 scope_source = requests.get(expanded_url)
                 if scope_is_live(scope_source):
                     return expanded_url
-    return None
+    for tweet in tweets:
+        for url in tweet.entities['urls']:
+            expanded_url = url['expanded_url']
+            if expanded_url.startswith('https://www.periscope.tv/w/'):
+                return expanded_url
+    return "no scope found :("
 
 def scope_is_live(scope_source):
     return 'isEnded&quot;:false' in scope_source
