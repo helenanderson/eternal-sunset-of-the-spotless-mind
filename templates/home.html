@@ -1,0 +1,36 @@
+<!doctype html>
+<head>
+  <link type='text/css' rel='stylesheet'  href={{ url_for('static', filename='style.css') }} />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type=text/javascript>
+  $(function() {
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $('#myonoffswitch').on('click', function()
+    {
+      var self = this;
+      setTimeout(
+        function() {
+          let sunDirection = self.checked ? 'rises' : 'sets';
+          $.getJSON($SCRIPT_ROOT + '/_' + sunDirection,
+          function(data) {
+            $("#scopeframe").attr("src", data.result);
+          });
+          return false;
+        }, 5);
+    });
+  });
+</script>
+</head>
+<body>
+  <div id="flexcontainer">
+  <h1>THE SUN ALWAYS </h1>
+  <div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+    <label class="onoffswitch-label" for="myonoffswitch">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+    </label>
+  </div>
+</div>
+  <iframe src={{ scope }} id="scopeframe"/>
+</body>
