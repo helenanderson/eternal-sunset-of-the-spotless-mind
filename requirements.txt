@@ -31,7 +31,6 @@ ipython==3.0.0
 ipython-genutils==0.1.0
 ipywidgets==5.1.5
 itsdangerous==0.24
-jdcal==1.0
 Jinja2==2.7.3
 jsonschema==2.4.0
 jupyter==1.0.0
