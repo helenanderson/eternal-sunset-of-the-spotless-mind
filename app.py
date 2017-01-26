@@ -3,6 +3,7 @@ from threading import Timer
 from fetch_scope import most_recent_scope, scope_is_live
 from flask import render_template, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
