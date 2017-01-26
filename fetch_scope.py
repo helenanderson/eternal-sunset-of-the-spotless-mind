@@ -6,14 +6,14 @@ import datetime
 import re
 
 # Returns (consumer_key, consumer_secret)
-def load_twitter_secrets():
-    twitter_filename = path.join('secrets', 'twitter.txt')
-    with open(twitter_filename, 'r') as twitter_file:
-        return twitter_file.read().strip().split('\n')
+# def load_twitter_secrets():
+#     twitter_filename = path.join('secrets', 'twitter.txt')
+#     with open(twitter_filename, 'r') as twitter_file:
+#         return twitter_file.read().strip().split('\n')
 
 def load_auth():
-    consumer_key, consumer_secret = load_twitter_secrets()
-    return tweepy.AppAuthHandler(consumer_key, consumer_secret)
+    # consumer_key, consumer_secret = load_twitter_secrets()
+    return tweepy.AppAuthHandler(os.environ['TWITTER_KEY'], os.environ['TWITTER_SECRET'])
 
 twitter_auth = load_auth()
 twitter = tweepy.API(twitter_auth)
