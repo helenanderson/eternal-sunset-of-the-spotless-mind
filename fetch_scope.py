@@ -23,18 +23,18 @@ def most_recent_scope(query):
     all_scopes = []
     tweets = twitter.search(q='periscope ' + query)
     for tweet in tweets:
-        print tweet.text
-        print "\n"
+        # print tweet.text
+        # print "\n"
         for url in tweet.entities['urls']:
             expanded_url = url['expanded_url']
-            print expanded_url
+            #print expanded_url
             if expanded_url.startswith('https://www.periscope.tv/w/'):
                 response = requests.get(expanded_url)
                 scope_info = (expanded_url, start_time(response), scope_is_live(response))
                 if scope_info not in all_scopes:
                     all_scopes.append(scope_info)
     sorted_scopes = sorted(all_scopes, key=lambda x: x[1], reverse=True)
-    print sorted_scopes
+    #print sorted_scopes
     live_scopes = [x for x in sorted_scopes if x[2] is True]
     if len(live_scopes) > 0:
         return live_scopes[0][0]
