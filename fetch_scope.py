@@ -12,35 +12,35 @@ def load_twitter_secrets():
         return twitter_file.read().strip().split('\n')
 
 def load_auth():
-    consumer_key, consumer_secret = load_twitter_secrets()
-    return tweepy.AppAuthHandler(consumer_key, consumer_secret)
-    #return tweepy.AppAuthHandler(os.environ['TWITTER_KEY'], os.environ['TWITTER_SECRET'])
+    # consumer_key, consumer_secret = load_twitter_secrets()
+    # return tweepy.AppAuthHandler(consumer_key, consumer_secret)
+    return tweepy.AppAuthHandler(os.environ['TWITTER_KEY'], os.environ['TWITTER_SECRET'])
 
 twitter_auth = load_auth()
 twitter = tweepy.API(twitter_auth)
 
-# Returns tweet object
+# Returns scope_info object
 def most_recent_scope(query):
     all_scopes = []
     tweets = twitter.search(q='periscope ' + query)
     for tweet in tweets:
-        # print tweet.text
+        #print tweet.text
         # print "\n"
         for url in tweet.entities['urls']:
             expanded_url = url['expanded_url']
             #print expanded_url
             if expanded_url.startswith('https://www.periscope.tv/w/'):
                 response = requests.get(expanded_url)
-                scope_info = (expanded_url, start_time(response), scope_is_live(response))
+                scope_info = (tweet, expanded_url, start_time(response), scope_is_live(response))
                 if scope_info not in all_scopes:
                     all_scopes.append(scope_info)
-    sorted_scopes = sorted(all_scopes, key=lambda x: x[1], reverse=True)
-    #print sorted_scopes
-    live_scopes = [x for x in sorted_scopes if x[2] is True]
+    sorted_scopes = sorted(all_scopes, key=lambda x: x[2], reverse=True)
+    print [(scope[2], scope[3]) for scope in sorted_scopes]
+    live_scopes = [x for x in sorted_scopes if x[3] is True]
     if len(live_scopes) > 0:
-        return live_scopes[0][0]
+        return live_scopes[0]
     elif len(sorted_scopes) > 0:
-        return sorted_scopes[0][0]
+        return sorted_scopes[0]
     else:
         return None
 

@@ -13,24 +13,28 @@
           let sunDirection = self.checked ? 'rises' : 'sets';
           $.getJSON($SCRIPT_ROOT + '/_' + sunDirection,
           function(data) {
-            $("#scopeframe").attr("src", data.result);
+            $("#tweetembeddiv").html(data.result);
           });
           return false;
         }, 5);
     });
   });
 </script>
+
+
 </head>
 <body>
   <div id="flexcontainer">
-  <h1>THE SUN ALWAYS </h1>
-  <div class="onoffswitch">
-    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-    <label class="onoffswitch-label" for="myonoffswitch">
-        <span class="onoffswitch-inner"></span>
-        <span class="onoffswitch-switch"></span>
-    </label>
+    <h1>THE SUN ALWAYS </h1>
+    <div class="onoffswitch">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+      <label class="onoffswitch-label" for="myonoffswitch">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+      </label>
+    </div>
   </div>
-</div>
-  <iframe src={{ scope }} id="scopeframe"/>
+  <div id="tweetembeddiv">
+    {{ scope }}
+  </div>
 </body>
