@@ -2,7 +2,6 @@ html
 {
   height: 100%;
   background-color: #EEEEEE;
-  overflow: hidden;
 }
 
 h1
@@ -17,7 +16,18 @@ body
 {
   margin: 0px;
   height: 100%;
-  overflow: hidden;
+}
+
+#title
+{
+  display: flex;
+}
+
+#refresh svg
+{
+  width: 20px;
+  padding-top: 5px;
+  cursor: pointer;
 }
 
 #tweetembeddiv
@@ -32,8 +42,11 @@ body
 #flexcontainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 15%;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .onoffswitch {
@@ -85,6 +98,6 @@ body
 }
 
 .EmbeddedTweet {
-  border-width: 0px;
-  background-color: #EEEEEE;
+    border-width: 0px;
+    background-color: #EEEEEE;
 }
